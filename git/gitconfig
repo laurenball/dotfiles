@@ -1,0 +1,20 @@
+[core]
+	exclusedfile = /Users/laurenball/.gitignore
+	excludesfile = /Users/laurenball/.gitignore
+	editor = nvim
+[color]
+	ui = true
+[user]
+	name = laurenball
+	email = lauren.ball@annkissam.com
+[alias]
+	co = checkout
+	c = commit -m
+	heave-ho = push
+[push]
+	default = simple
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process

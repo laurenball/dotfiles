@@ -1,0 +1,248 @@
+filetype indent plugin on
+
+syntax on
+
+" Turn off backups and swaps
+set nobackup
+set noswapfile
+
+" Buff up auto-completion
+set wildmenu
+
+" Use system clipboard
+set clipboard+=unnamedplus
+
+" Show status bar
+set laststatus=2
+
+" Show commands in bottom of screen
+set showcmd
+
+" Search highlighting (meh?)
+set hlsearch
+
+" I think this helps with reload, but I'll read into it later
+set nocompatible
+
+" Enable standard backspacing
+set backspace=indent,eol,start
+
+" Case insenstive searching
+set ignorecase
+set smartcase
+
+" Keep indentation for new lines set to current indentation level
+set autoindent
+
+" Display line numbers
+set number
+
+" Ack ignored regex
+set wildignore+=*/.git/*,*/tmp/*,*/.tmp/*,*/.DS_Store/*set,*.swp
+
+" Display cursor position
+set ruler
+
+" Turn off line wrapping
+set nowrap
+
+" Indentation (setting based off of ruby standards)
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
+" Change update frequency (added to make gitgutter smoother)
+set updatetime=100
+
+" Line guide
+set colorcolumn=80,100
+hi ColorColumn ctermbg=235 guibg=#2c2d27
+
+" Highlighting color
+hi Search ctermbg=240 guibg=#725577
+hi Visual ctermbg=240 guibg=#725577
+
+"set foldmethod=syntax " Fold using the wisdom of vim.ruby or similar
+set foldmethod=manual 
+set nofoldenable " Temporarily disable folding when file is first opened
+
+ "Copy relative file path of current buffer to clipboard
+noremap <Leader>p :let @+=expand("%")<CR>
+ "Copy absolute file path of current buffer to clipboard
+noremap <Leader>P :let @+=expand("%:p")<CR>
+
+" Remap integer increment (conflicted with tmux overwrite)
+noremap <C-z> <C-a>
+
+" Remap escape
+imap jj <Esc>
+vmap nn <Esc>
+
+" Clear search highlighting
+map <C-m> :noh<CR>
+
+" Better split swapping
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" fzf view
+let g:fzf_layout = { 'down': '~20%' }
+" Ack formatting
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" Open NERD tree
+map <C-d> :NERDTreeToggle<CR>
+
+" NERD Commenter settings
+" Adds a space after comment insertion
+let g:NERDSpaceDelims = 1
+
+" fzf shortcuts
+" stolen from https://rietta.com/blog/hide-gitignored-files-fzf-vim/
+" fzf file fuzzy search that respects .gitignore
+" If in git directory, show only files that are committed, staged, or unstaged
+" else use regular :Files
+nnoremap <expr> <Leader>t (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<CR>"
+map <Leader>l :Commits<CR>
+
+let g:airline_theme='bubblegum'
+
+"remove trailing whitespace
+autocmd BufWritePre *.rb :%s/\s\+$//e
+
+" #################################################
+" #                 ALE settings                  #
+" #################################################
+" `:h ale-options` for details
+let g:ale_enabled = 1
+
+" remove ALE gutter background color
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
+
+" remove syntax highlighting
+let g:ale_set_highlights = 0
+
+" set ALE warning/error symbols
+let g:ale_sign_error = '!!'
+let g:ale_sign_warning = '!'
+
+" set ALE error presentation
+"   echo_msg_format is what appears below the statusline
+let g:ale_echo_msg_error_str = 'Error'
+let g:ale_echo_msg_info_str = 'Info'
+let g:ale_echo_msg_warning_str = 'Warning'
+let g:ale_echo_msg_format =
+    \ '[%linter%] %code%: %s'
+
+"   loclist_msg_format is what appears in loclist
+let g:ale_loclist_msg_error_str = 'Error'
+let g:ale_loclist_msg_info_str = 'Info'
+let g:ale_loclist_msg_warning_str = 'Warning'
+let g:ale_loclist_msg_format =
+    \ '[%linter%]%code% | %s (%severity%)'
+
+" Specify linters per language.
+"   Takes a list of linters,
+"     the string 'all' (or removing the key) returns to default
+let s:default_linters =
+    \{
+    \   'ruby': ['rubocop', 'ruby'],
+    \}
+
+let s:strict_linters =
+    \ {
+    \   'ruby': [
+    \     'breakman',
+    \     'rails_best_practices',
+    \     'reek',
+    \     'rubocop',
+    \     'rufo',
+    \   ],
+    \ }
+let g:ale_linters = s:default_linters
+
+function! StrictLintToggle()
+  if exists('b:ale_linters')
+    unlet b:ale_linters
+    echo 'Linter: strict mode off'
+  else
+    let b:ale_linters = s:strict_linters
+    echo 'Linter: strict mode on'
+  endif
+endfunction
+
+" Individual linter options
+
+" ALE keybindings
+"   jump to next warning down, wrap if none below
+nmap <silent> <Leader>n <Plug>(ale_next_wrap)
+"   jump to next warning up, wrap if none up
+nmap <silent> <Leader>N <Plug>(ale_previous_wrap)
+"   show full message for current line
+nmap <silent> <Leader>d <Plug>(ale_detail)
+"   enable/disable ALE (includes buffer, statusline, gutter)
+"   (L for Linter)
+nmap <silent> <Leader>L <Plug>(ale_toggle)
+" strict mode: use more linters
+nmap <silent> <Leader>S :call StrictLintToggle()<CR>
+" #################################################
+" #             End ALE settings                  #
+" #################################################
+fun! SetupVAM()
+  let c = get(g:, 'vim_addon_manager', {})
+  let g:vim_addon_manager = c
+  let c.plugin_root_dir = expand('$HOME', 1) . '/.vim/vim-addons'
+  let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/vim-addon-manager'
+
+  if !isdirectory(c.plugin_root_dir.'/vim-addon-manager/autoload')
+    execute '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '
+                \       shellescape(c.plugin_root_dir.'/vim-addon-manager', 1)
+  endif
+
+  call vam#ActivateAddons([], {'auto_install' : 1})
+
+  " General
+  VAMActivate vim-ruby
+  VAMActivate github:tpope/vim-rails
+  VAMActivate github:tpope/vim-bundler
+
+  "VAMActivate ctrlp
+
+  " Also maybe this
+  VAMActivate github:junegunn/fzf
+  VAMActivate github:junegunn/fzf.vim
+
+  " traversal
+  VAMActivate github:scrooloose/nerdtree
+  VAMActivate github:mileszs/ack.vim
+  VAMActivate github:christoomey/vim-tmux-navigator
+
+  " git
+  VAMActivate fugitive
+  VAMActivate github:tpope/vim-rhubarb
+  VAMActivate github:airblade/vim-gitgutter
+
+  " UI
+  VAMActivate github:vim-airline/vim-airline
+  VAMActivate github:vim-airline/vim-airline-themes
+  VAMActivate github:joker1007/vim-ruby-heredoc-syntax 
+
+  " general editing
+  VAMActivate github:Raimondi/delimitMate
+  VAMActivate github:terryma/vim-multiple-cursors
+  VAMActivate Supertab
+  VAMActivate github:tpope/vim-surround
+  VAMActivate github:tpope/vim-eunuch
+  VAMActivate github:tpope/vim-abolish
+  VAMActivate github:AndrewRadev/splitjoin.vim
+  VAMActivate github:nelstrom/vim-textobj-rubyblock
+  VAMActivate The_NERD_Commenter
+  VAMActivate github:editorconfig/editorconfig-vim
+  VAMActivate github:tpope/vim-endwise
+  VAMActivate github:dense-analysis/ale
+endfun
+
+call SetupVAM()
