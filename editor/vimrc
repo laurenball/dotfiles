@@ -229,6 +229,7 @@ fun! SetupVAM()
   VAMActivate github:vim-airline/vim-airline
   VAMActivate github:vim-airline/vim-airline-themes
   VAMActivate github:joker1007/vim-ruby-heredoc-syntax 
+  VAMActivate github:dracula/vim
 
   " general editing
   VAMActivate github:Raimondi/delimitMate
@@ -246,3 +247,5 @@ fun! SetupVAM()
 endfun
 
 call SetupVAM()
+
+colorscheme dracula
