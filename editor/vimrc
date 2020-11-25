@@ -107,7 +107,8 @@ let g:NERDSpaceDelims = 1
 nnoremap <expr> <Leader>t (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<CR>"
 map <Leader>l :Commits<CR>
 
-let g:airline_theme='bubblegum'
+" let g:airline_theme='bubblegum'
+let g:airline_theme='gruvbox'
 
 "remove trailing whitespace
 autocmd BufWritePre *.rb :%s/\s\+$//e
@@ -230,6 +231,7 @@ fun! SetupVAM()
   VAMActivate github:vim-airline/vim-airline-themes
   VAMActivate github:joker1007/vim-ruby-heredoc-syntax 
   VAMActivate github:dracula/vim
+  VAMActivate github:morhetz/gruvbox
 
   " general editing
   VAMActivate github:Raimondi/delimitMate
@@ -248,4 +250,5 @@ endfun
 
 call SetupVAM()
 
-colorscheme dracula
+" colorscheme dracula
+autocmd vimenter * ++nested colorscheme gruvbox
