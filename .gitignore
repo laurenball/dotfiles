@@ -1,2 +1,3 @@
 shell/*
 !shell/tmux.conf
+!shell/zshrc

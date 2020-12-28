@@ -1,0 +1,53 @@
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+#bundler editor 
+export BUNDLER_EDITOR='nvim'
+
+DEFAULT_USER=`whoami`
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="fwalch"
+
+setopt APPEND_HISTORY
+
+plugins=(git colored-man-pages colorize jump bundler)
+
+source $ZSH/oh-my-zsh.sh
+
+# standard aliases
+alias zshconfig="nvim ~/.zshrc"
+alias zource="source ~/.zshrc"
+
+alias vimconfig="nvim ~/.vimrc"
+
+alias grecent="git for-each-ref --sort='''authordate:iso8601''' --format=''' %(authordate:relative)%09%(refname:short)''' refs/heads"
+alias gre="grecent"
+
+alias public_key='more ~/.ssh/id_rsa.pub'
+alias ssh_key="public_key"
+
+alias rspec_pretty='rspec -fd'
+
+#open sticky file
+alias sticky="nvim ~/Documents/sticky.txt"
+alias open="xdg-open"
+
+# rerun tests
+function rspec_n() {
+  if [[ $1 -gt 1 && "$2" != "" ]]
+  then 
+    for i in {1..$1}; do be rspec "$2"; done
+  else
+    echo 'Make sure first argument is a num greater than 1 and second is a string'
+  fi
+}
+
+function pretty_csv {
+  column -t -s, -n "$@" | less -F -S -X -K
+}
+
+. /home/lauren/.asdf/asdf.sh
