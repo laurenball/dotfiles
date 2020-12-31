@@ -50,4 +50,4 @@ function pretty_csv {
   column -t -s, -n "$@" | less -F -S -X -K
 }
 
-. /home/lauren/.asdf/asdf.sh
+. /$HOME/.asdf/asdf.sh
