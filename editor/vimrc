@@ -209,6 +209,7 @@ fun! SetupVAM()
   VAMActivate vim-ruby
   VAMActivate github:tpope/vim-rails
   VAMActivate github:tpope/vim-bundler
+  VAMActivate vim-javascript
 
   "VAMActivate ctrlp
 
@@ -246,6 +247,9 @@ fun! SetupVAM()
   VAMActivate github:editorconfig/editorconfig-vim
   VAMActivate github:tpope/vim-endwise
   VAMActivate github:dense-analysis/ale
+
+  " wakatime
+  VAMActivate github:wakatime/vim-wakatime
 endfun
 
 call SetupVAM()
