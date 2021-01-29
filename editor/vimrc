@@ -111,7 +111,7 @@ nnoremap <expr> <Leader>t (len(system('git rev-parse')) ? ':Files' : ':GFiles --
 map <Leader>l :Commits<CR>
 
 " let g:airline_theme='bubblegum'
-let g:airline_theme='gruvbox'
+" let g:airline_theme='gruvbox'
 
 "remove trailing whitespace
 autocmd BufWritePre *.rb :%s/\s\+$//e
@@ -195,69 +195,52 @@ nmap <silent> <Leader>S :call StrictLintToggle()<CR>
 " #################################################
 " #             End ALE settings                  #
 " #################################################
-fun! SetupVAM()
-  let c = get(g:, 'vim_addon_manager', {})
-  let g:vim_addon_manager = c
-  let c.plugin_root_dir = expand('$HOME', 1) . '/.vim/vim-addons'
-  let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/vim-addon-manager'
 
-  if !isdirectory(c.plugin_root_dir.'/vim-addon-manager/autoload')
-    execute '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '
-                \       shellescape(c.plugin_root_dir.'/vim-addon-manager', 1)
-  endif
-
-  call vam#ActivateAddons([], {'auto_install' : 1})
-
-  " language pacakges
-  VAMActivate vim-ruby
-  VAMActivate github:tpope/vim-rails
-  VAMActivate vim-javascript
-  VAMActivate github:petrbroz/vim-glsl
-
-  "VAMActivate ctrlp
-
+call plug#begin('~/.vim/plugged')
   " Also maybe this
-  VAMActivate github:junegunn/fzf
-  VAMActivate github:junegunn/fzf.vim
+  Plug 'junegunn/fzf'
+  Plug 'junegunn/fzf.vim'
 
   " traversal
-  VAMActivate github:scrooloose/nerdtree
-  VAMActivate github:mileszs/ack.vim
-  VAMActivate github:christoomey/vim-tmux-navigator
+  Plug 'scrooloose/nerdtree'
+  Plug 'mileszs/ack.vim'
+  Plug 'christoomey/vim-tmux-navigator'
 
   " git
-  VAMActivate fugitive
-  VAMActivate github:tpope/vim-rhubarb
-  VAMActivate github:airblade/vim-gitgutter
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-rhubarb'
+  Plug 'airblade/vim-gitgutter'
+
+  " ruby
+  Plug 'vim-ruby/vim-ruby'
+  Plug 'tpope/vim-rails'
+  Plug 'tpope/vim-bundler'
+  Plug 'joker1007/vim-ruby-heredoc-syntax'
+  Plug 'kana/vim-textobj-user'
+  Plug 'nelstrom/vim-textobj-rubyblock'
+
+  " js/frontend
+  Plug 'pangloss/vim-javascript'
+  Plug 'petrbroz/vim-glsl'
+  Plug 'alvan/vim-closetag'
 
   " UI
-  VAMActivate github:vim-airline/vim-airline
-  VAMActivate github:vim-airline/vim-airline-themes
-  VAMActivate github:joker1007/vim-ruby-heredoc-syntax 
-  VAMActivate github:dracula/vim
-  VAMActivate github:morhetz/gruvbox
-
-  " general editing
-  VAMActivate github:Raimondi/delimitMate
-  VAMActivate github:terryma/vim-multiple-cursors
-  VAMActivate Supertab
-  VAMActivate github:tpope/vim-surround
-  VAMActivate github:tpope/vim-eunuch
-  VAMActivate github:tpope/vim-abolish
-  VAMActivate github:AndrewRadev/splitjoin.vim
-  VAMActivate github:nelstrom/vim-textobj-rubyblock
-  VAMActivate The_NERD_Commenter
-  VAMActivate github:editorconfig/editorconfig-vim
-  VAMActivate github:tpope/vim-endwise
-  VAMActivate github:dense-analysis/ale
-  VAMActivate github:tpope/vim-bundler
-  VAMActivate github:alvan/vim-closetag
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'morhetz/gruvbox'
+  Plug 'Raimondi/delimitMate'
+  Plug 'terryma/vim-multiple-cursors'
+  " Plug 'Supertab'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-eunuch'
+  Plug 'tpope/vim-abolish'
+  Plug 'AndrewRadev/splitjoin.vim'
+  Plug 'preservim/nerdcommenter'
+  Plug 'editorconfig/editorconfig-vim'
+  Plug 'tpope/vim-endwise'
 
   " wakatime
-  VAMActivate github:wakatime/vim-wakatime
-endfun
+  Plug 'wakatime/vim-wakatime'
+call plug#end()
 
-call SetupVAM()
-
-" colorscheme dracula
 autocmd vimenter * ++nested colorscheme gruvbox
