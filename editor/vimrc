@@ -205,11 +205,11 @@ fun! SetupVAM()
 
   call vam#ActivateAddons([], {'auto_install' : 1})
 
-  " General
+  " language pacakges
   VAMActivate vim-ruby
   VAMActivate github:tpope/vim-rails
-  VAMActivate github:tpope/vim-bundler
   VAMActivate vim-javascript
+  VAMActivate github:petrbroz/vim-glsl
 
   "VAMActivate ctrlp
 
@@ -247,6 +247,7 @@ fun! SetupVAM()
   VAMActivate github:editorconfig/editorconfig-vim
   VAMActivate github:tpope/vim-endwise
   VAMActivate github:dense-analysis/ale
+  VAMActivate github:tpope/vim-bundler
 
   " wakatime
   VAMActivate github:wakatime/vim-wakatime
