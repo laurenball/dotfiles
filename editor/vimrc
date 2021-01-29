@@ -99,6 +99,9 @@ map <C-d> :NERDTreeToggle<CR>
 " Adds a space after comment insertion
 let g:NERDSpaceDelims = 1
 
+" delimitmate disable <> matching for html to avoid conflicting with close-tag
+au FileType html let b:delimitMate_matchpairs = "(:),[:],{:}"
+
 " fzf shortcuts
 " stolen from https://rietta.com/blog/hide-gitignored-files-fzf-vim/
 " fzf file fuzzy search that respects .gitignore
@@ -248,6 +251,7 @@ fun! SetupVAM()
   VAMActivate github:tpope/vim-endwise
   VAMActivate github:dense-analysis/ale
   VAMActivate github:tpope/vim-bundler
+  VAMActivate github:alvan/vim-closetag
 
   " wakatime
   VAMActivate github:wakatime/vim-wakatime
