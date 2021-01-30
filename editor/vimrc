@@ -192,19 +192,18 @@ nmap <silent> <Leader>d <Plug>(ale_detail)
 nmap <silent> <Leader>L <Plug>(ale_toggle)
 " strict mode: use more linters
 nmap <silent> <Leader>S :call StrictLintToggle()<CR>
+
 " #################################################
 " #             End ALE settings                  #
 " #################################################
 
 call plug#begin('~/.vim/plugged')
-  " Also maybe this
-  Plug 'junegunn/fzf'
-  Plug 'junegunn/fzf.vim'
-
   " traversal
   Plug 'scrooloose/nerdtree'
   Plug 'mileszs/ack.vim'
   Plug 'christoomey/vim-tmux-navigator'
+  Plug 'junegunn/fzf'
+  Plug 'junegunn/fzf.vim'
 
   " git
   Plug 'tpope/vim-fugitive'
@@ -230,7 +229,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'morhetz/gruvbox'
   Plug 'Raimondi/delimitMate'
   Plug 'terryma/vim-multiple-cursors'
-  " Plug 'Supertab'
+  Plug 'ervandew/supertab'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-eunuch'
   Plug 'tpope/vim-abolish'
@@ -238,6 +237,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'preservim/nerdcommenter'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'tpope/vim-endwise'
+  Plug 'dense-analysis/ale'
 
   " wakatime
   Plug 'wakatime/vim-wakatime'
