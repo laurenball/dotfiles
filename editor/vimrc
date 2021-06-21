@@ -238,9 +238,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'editorconfig/editorconfig-vim'
   Plug 'tpope/vim-endwise'
   Plug 'dense-analysis/ale'
-
-  " wakatime
-  Plug 'wakatime/vim-wakatime'
 call plug#end()
 
-autocmd vimenter * ++nested colorscheme gruvbox
+" autocmd vimenter * ++nested 
+colorscheme gruvbox
+hi Normal guibg=NONE ctermbg=NONE
+hi clear SignColumn
