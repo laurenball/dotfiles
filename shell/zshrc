@@ -50,4 +50,9 @@ function pretty_csv {
   column -t -s, -n "$@" | less -F -S -X -K
 }
 
+# add local binfile to path for script storage
+if [ -d "$HOME/bin" ] ; then
+  export PATH="$HOME/bin:$PATH"
+fi
+
 . /opt/asdf-vm/asdf.sh

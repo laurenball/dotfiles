@@ -8,9 +8,9 @@
 	name = laurenball
 	email = lauren.l.dev@gmail.com
 [alias]
-	co = checkout
-	c = commit -m
-	heave-ho = push
+        sync = "!f() { branch=$(git symbolic-ref --short HEAD) && git fetch --all --prune && git pull upstream ${branch} && git push origin ${branch}; }; f"
+        pr = "!f() { git fetch upstream refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+        pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref; do branch=${ref#refs/heads/}; git branch -D $branch; done"
 [push]
 	default = simple
 [filter "lfs"]
